@@ -1,3 +1,4 @@
+// Copyright 2018 SPACEHAUC Groundstation Team
 /*
   Dish Positioner Header
   USB to Serial
@@ -6,8 +7,8 @@
   for any purpose.
 */
 
-#ifndef POSITIONDISH_H
-#define POSITIONDISH_H
+#ifndef POSITIONDISH_H_
+#define POSITIONDISH_H_
 
 #define HEX_P         0x50
 #define HEX_A         0x41
@@ -17,10 +18,10 @@
 
 // Initialize communcation with the positioner
 // Returns the file/device stream
-//int initPositioner();
+// int initPositioner();
 
 // Current antenna position request
-//int P(int stream);
+// int P(int stream);
 
 // Change antenna elevation
 int PA(int stream, double degrees);
@@ -30,4 +31,4 @@ int PB(int stream, double degrees);
 
 char to_Hex(int integer);
 
-#endif
+#endif  // POSITIONDISH_H_

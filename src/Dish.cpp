@@ -2,10 +2,10 @@
 
 #include "../include/Dish.h"
 
-#include <unistd.h>
-#include <iostream>
 #include <termios.h>
 #include <fcntl.h>
+#include <unistd.h>
+#include <iostream>
 #include "../libsgp4/Util.h"
 #include "../include/positionDish.h"
 
@@ -32,8 +32,7 @@ void Dish::track() {
   CoordTopocentric topo = mpLocation->GetLookAngle(eci);
   int stream = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_NDELAY);
   // MAY NEED TO CHANGE PORT DEPENDING ON CONNECTOR!!
-  if (stream < 0)
-  {
+  if (stream < 0) {
     perror("Unable to open UART");
     exit(1);
   }
@@ -47,7 +46,8 @@ void Dish::track() {
   tcflush(stream, TCIFLUSH);
   tcsetattr(stream, TCSANOW, &options);
   // move there
-  //std::cout << "azimuth :" << topo.azimuth << "elevation :" << topo.elevation << "\n";
+  // std::cout << "azimuth :" << topo.azimuth
+  //      << "elevation :" << topo.elevation << "\n";
   PA(stream, topo.elevation);
   PB(stream, topo.azimuth);
   close(stream);
@@ -60,6 +60,7 @@ void Dish::wait() {
 }
 
 void Dish::moveToNextAppearance() {
+  struct termios options;
   const int TIME_STEP = 60;  // seconds
   // figure out where next appearance will be
   PassDetails_t nextPass =
@@ -68,14 +69,12 @@ void Dish::moveToNextAppearance() {
   Eci eci = mpSGP4->FindPosition(nextPass.aos);
   CoordTopocentric topo = mpLocation->GetLookAngle(eci);
   int stream = open("/dev/ttyUSB0", O_RDWR | O_NOCTTY | O_NDELAY);
-  // MAY NEED TO CHANGE PORT DEPENDING ON CONNECTOR!!
-  if (stream < 0)
-  {
+  // MAY NEED TO CHANGE PORT DEPENDING ON CONNECTOR!
+  if (stream < 0) {
     perror("Unable to open UART");
     exit(1);
   }
 
-  struct termios options;
   tcgetattr(stream, &options);
   options.c_cflag = B2400 | CS8 | CLOCAL | CREAD;
   options.c_iflag = IGNPAR;
@@ -115,18 +114,22 @@ void Dish::move(double azimuth, double elevation) {
             << " deg.  Elevation = " << Util::RadiansToDegrees(elevation)
             << " deg." << std::endl;
             */
-            return;
 }
 
 std::list<PassDetails_t> Dish::generatePassList() {
   const int TIME_STEP = 60;
-  return GeneratePassList(mpLocation->GetLocation(), mpSGP4,
-                          DateTime::Now(true), DateTime::Now(true).AddDays(7.0),
+  return GeneratePassList(mpLocation->GetLocation(),
+                          mpSGP4,
+                          DateTime::Now(true),
+                          DateTime::Now(true).AddDays(7.0),
                           TIME_STEP);
 }
 std::list<PassDetails_t> Dish::generatePassList(const DateTime &start_time,
                                                 const DateTime &end_time) {
   const int TIME_STEP = 60;
-  return GeneratePassList(mpLocation->GetLocation(), mpSGP4, start_time,
-                          end_time, TIME_STEP);
+  return GeneratePassList(mpLocation->GetLocation(),
+                          mpSGP4,
+                          start_time,
+                          end_time,
+                          TIME_STEP);
 }

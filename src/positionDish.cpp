@@ -1,3 +1,4 @@
+// Copyright 2018 SPACEHAUC Groundstation Team, David Baumann
 /*
   Dish Positioner
   USB to Serial
@@ -7,6 +8,7 @@
 */
 
 #include <stdio.h>
+#include <math.h>
 #include <unistd.h>
 #include <stdint.h>
 #include <fcntl.h>
@@ -15,14 +17,13 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
-#include <math.h>
 #include "../include/positionDish.h"
 
 // Change antenna elevation
-int PA(int stream, double degrees)
-{
+int PA(int stream, double degrees) {
   int test = degrees * (180 / M_PI);
-  //std::cout << "elevation :" << degrees * (180 / M_PI) << "degrees:: "<< degrees << std::endl;
+  // std::cout << "elevation :" << degrees * (180 / M_PI)
+  //           << "degrees:: "<< degrees << std::endl;
   int i = 0;
   char cmd[] = {HEX_P, HEX_A, HEX_SPACE, 0, 0, 0, 0};
   int temp;
@@ -39,13 +40,14 @@ int PA(int stream, double degrees)
   cmd[i + 3] = to_Hex(temp);
   i++;
   cmd[i + 3] = HEX_CR;
-  /*for (i = 0; i < 6; i++) {
-  std::cout << "0x" << std::hex << (int)cmd[i] << std::endl;
-}*/
+  /* 
+  for (i = 0; i < 6; i++) {
+    std::cout << "0x" << std::hex << (int)cmd[i] << std::endl;
+  } 
+  */
   int count = write(stream, cmd, i + 4);
-  if (count < 0)
-  {
-  	perror("Error writing to positioner");
+  if (count < 0) {
+    perror("Error writing to positioner");
     return 1;
   }
 
@@ -54,16 +56,16 @@ int PA(int stream, double degrees)
 
 
 // Change antenna azimuth
-int PB(int stream, double degrees)
-{
+int PB(int stream, double degrees) {
   int test = degrees * (180 / M_PI);
-  //std::cout << "azimuth:: " << degrees * (180 / M_PI)<< "degrees:: "<< degrees << std::endl;
+  // std::cout << "azimuth:: " << degrees * (180 / M_PI)
+  //           << "degrees:: "<< degrees << std::endl;
   int i = 0;
   char cmd[] = {HEX_P, HEX_B, HEX_SPACE, 0, 0, 0, 0};
   int temp;
   if (test > 100) {
     temp = (test / 100);
-    //std::cout << "test =" << temp;
+    //  std::cout << "test =" << temp;
     cmd[3] = to_Hex(temp);
     test = (test % 100);
     i = 1;
@@ -72,18 +74,18 @@ int PB(int stream, double degrees)
   cmd[i + 3] = to_Hex(temp);
   i++;
   temp = (test % 10);
-  //std::cout << temp;
+  //  std::cout << temp;
   cmd[i + 3] = to_Hex(temp);
   i++;
   cmd[i + 3] = HEX_CR;
-  /*for (i = 0; i < 6; i++) {
-  std::cout << "0x" << std::hex << (int)cmd[i] << std::endl;
-}*/
-
+  /*
+  for (i = 0; i < 6; i++) {
+    std::cout << "0x" << std::hex << (int)cmd[i] << std::endl;
+  }
+  */
   int count = write(stream, cmd, i + 4);
-  if (count < 0)
-  {
-  	perror("Error writing to positioner");
+  if (count < 0) {
+    perror("Error writing to positioner");
     return 1;
   }
 
@@ -91,7 +93,7 @@ int PB(int stream, double degrees)
 }
 
 char to_Hex(int integer) {
-  switch(integer) {
+  switch (integer) {
     case 0: return 0x30;
     case 1: return 0x31;
     case 2: return 0x32;
@@ -102,7 +104,7 @@ char to_Hex(int integer) {
     case 7: return 0x37;
     case 8: return 0x38;
     case 9: return 0x39;
-    default: std::cout << "error, exiting.";
+    default: std::cout << "error, exiting." << std::endl;
       exit(1);
   }
   return 0;

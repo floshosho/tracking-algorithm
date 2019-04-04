@@ -21,8 +21,6 @@ const double ELEVATION = 0.040;       // km
 
 // Satellite Data (Using ISS Data for now)
 const char NAME[] = "ISS (CSUNSAT1)             ";
-
-
 const char TLE1[] =
     "1 36122U 09072B   19083.69841103 -.00000043  00000-0 -32199-5 0  9993";
 const char TLE2[] =

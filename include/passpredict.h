@@ -23,8 +23,8 @@
  *      "PassDetails_t"
  */
 
-#ifndef INCLUDE_PASSPREDICT_H_
-#define INCLUDE_PASSPREDICT_H_
+#ifndef PASSPREDICT_H_
+#define PASSPREDICT_H_
 
 #include <list>
 #include "../libsgp4/CoordGeodetic.h"
@@ -36,12 +36,16 @@ typedef struct {
   double max_elevation;
 } PassDetails_t;
 
-double FindMaxElevation(const CoordGeodetic &user_geo, SGP4 *sgp4,
-                        const DateTime &aos, const DateTime &los);
+double FindMaxElevation(const CoordGeodetic &user_geo,
+                        SGP4 *sgp4,
+                        const DateTime &aos,
+                        const DateTime &los);
 
-DateTime FindCrossingPoint(const CoordGeodetic &user_geo, SGP4 *sgp4,
-                           const DateTime &initial_time1,
-                           const DateTime &initial_time2, bool finding_aos);
+DateTime FindCrossingPoint(const CoordGeodetic &user_geo,
+                          SGP4 *sgp4,
+                          const DateTime &initial_time1,
+                          const DateTime &initial_time2,
+                          bool finding_aos);
 
 std::list<PassDetails_t> GeneratePassList(const CoordGeodetic &user_geo,
                                           SGP4 *sgp4,
@@ -49,7 +53,8 @@ std::list<PassDetails_t> GeneratePassList(const CoordGeodetic &user_geo,
                                           const DateTime &end_time,
                                           const int time_step);
 
-PassDetails_t FindNextPass(const CoordGeodetic &user_geo, SGP4 *sgp4,
-                           const int time_step);
+PassDetails_t FindNextPass(const CoordGeodetic &user_geo,
+                          SGP4 *sgp4,
+                          const int time_step);
 
-#endif  // INCLUDE_PASSPREDICT_H_
+#endif  // PASSPREDICT_H_

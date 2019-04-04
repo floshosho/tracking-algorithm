@@ -4,8 +4,8 @@
 
 // Copyright 2018 SPACEHAUC Groundstation Team, David Baumann
 
-#ifndef INCLUDE_DISH_H_
-#define INCLUDE_DISH_H_
+#ifndef DISH_H_
+#define DISH_H_
 
 #include <list>
 #include "../include/Satellite.h"
@@ -51,4 +51,4 @@ class Dish {
                                             const DateTime &end_time);
 };
 
-#endif  // INCLUDE_DISH_H_
+#endif  // DISH_H_

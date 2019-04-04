@@ -1,0 +1,4 @@
+# Ignore the .vscode directory that vscode keeps adding, we do not
+# want this in out github
+
+.vscode/

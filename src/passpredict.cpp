@@ -21,8 +21,10 @@
 #include "../libsgp4/CoordTopocentric.h"
 #include "../libsgp4/Observer.h"
 
-double FindMaxElevation(const CoordGeodetic& user_geo, SGP4* sgp4,
-                        const DateTime& aos, const DateTime& los) {
+double FindMaxElevation(const CoordGeodetic& user_geo,
+                        SGP4* sgp4,
+                        const DateTime& aos,
+                        const DateTime& los) {
   Observer obs(user_geo);
 
   bool running;
@@ -89,9 +91,11 @@ double FindMaxElevation(const CoordGeodetic& user_geo, SGP4* sgp4,
   return max_elevation;
 }
 
-DateTime FindCrossingPoint(const CoordGeodetic& user_geo, SGP4* sgp4,
-                           const DateTime& initial_time1,
-                           const DateTime& initial_time2, bool finding_aos) {
+DateTime FindCrossingPoint(const CoordGeodetic& user_geo,
+                          SGP4* sgp4,
+                          const DateTime& initial_time1,
+                          const DateTime& initial_time2,
+                          bool finding_aos) {
   Observer obs(user_geo);
 
   bool running;
@@ -270,8 +274,9 @@ std::list<PassDetails_t> GeneratePassList(const CoordGeodetic& user_geo,
   return pass_list;
 }
 
-PassDetails_t FindNextPass(const CoordGeodetic& user_geo, SGP4* sgp4,
-                           const int time_step) {
+PassDetails_t FindNextPass(const CoordGeodetic& user_geo,
+                          SGP4* sgp4,
+                          const int time_step) {
   PassDetails_t pd;
   Observer obs(user_geo);
 
